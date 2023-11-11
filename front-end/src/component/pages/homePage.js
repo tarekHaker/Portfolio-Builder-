@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <div>
       <Nav />
-      <div id='background'></div>
+      <div className='background'></div>
     </div>
   )
 }

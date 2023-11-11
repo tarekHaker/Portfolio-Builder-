@@ -9,8 +9,8 @@ export default function Nav({setViews}) {
         </div>
         <div className="navbar-right">
           <a href="#">Contact</a>
-          <a href="/signIn">Sign-In</a>
-          <a href="signUp">Sign-Up</a>
+          <a href="/signIn">Sign-in</a>
+          <a href="signUp">Sign up</a>
         </div>
       </nav>
     </div>
