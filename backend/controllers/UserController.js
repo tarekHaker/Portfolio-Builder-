@@ -117,6 +117,7 @@ const UserController = {
             res.status(500).send('Error deleting user');
         }
     },
+
     getAllUsers: async (req, res) => {
         try {
             const users = await User.find();

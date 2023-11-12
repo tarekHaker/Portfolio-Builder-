@@ -83,6 +83,7 @@ const ProjectController = {
             res.status(500).send('Error deleting project');
         }
     },
+
     getAllProjects: async (req, res) => {
         try {
             const projects = await Project.find();

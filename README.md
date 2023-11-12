@@ -77,6 +77,8 @@ If you're using MongoDB:
 Install dependencies for  the backend:
 Run npm install 
 npm install cors
+npm install multer
+
 npm run db:setup
 
 the appropriate database configuration is in the index.js file.
