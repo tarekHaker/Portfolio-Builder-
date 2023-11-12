@@ -20,7 +20,7 @@ code {
  #logo{
   font-family: 'Kenia', sans-serif;
   color: rgb(10, 10, 10);
-  font-size: 1.5em;
+  font-size: 2em;
  }
 
 /* Reset default margin and padding */
@@ -103,5 +103,8 @@ a{
   display: flex;
   flex-wrap: wrap;
   padding: 5%;
+  justify-content: center;
  
 }
+
+

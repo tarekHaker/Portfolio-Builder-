@@ -6,7 +6,8 @@ import ButtonAppBar from "./component/navBar"
 import Nav from "./component/nav";
 import HomePage from './component/pages/homePage';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
-import User from "./component/pages/user"
+import User from "./component/pages/user";
+import Form from './component/pages/form'
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,12 @@ const router = createBrowserRouter([
   {
     path:'/user',
     element: <User />
+  },
+  {
+    path:'/form',
+    element: <Form />
   }
+
 ])
 
 

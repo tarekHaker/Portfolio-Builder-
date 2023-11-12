@@ -1,10 +1,13 @@
 import React from 'react';
 import NavUser from './navUser';
 import MediaCard from "../portfiolo";
-import FloatingActionButtons from '../icon'
+import FloatingActionButtons from '../icon';
+
+
 
 
 export default function User() {
+ 
   return (
     <div >
      <NavUser />
@@ -16,14 +19,11 @@ export default function User() {
      <MediaCard />
      <MediaCard />
      <MediaCard />
-     <MediaCard />
-     
-     <FloatingActionButtons />
-     
-     
+   
+  
 
      </div>
-    
+     <FloatingActionButtons />
      </div>
 
     </div>
