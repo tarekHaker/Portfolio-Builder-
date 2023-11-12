@@ -21,6 +21,8 @@ code {
   font-family: 'Kenia', sans-serif;
   color: rgb(10, 10, 10);
   font-size: 2em;
+  padding: 3vh;
+  padding-top: 5vh;
  }
 
 /* Reset default margin and padding */
@@ -31,7 +33,7 @@ code {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px; /* Adjust padding as needed */
+  padding: 20px 23px; /* Adjust padding as needed */
   color: black;
   
 }
@@ -53,7 +55,9 @@ code {
   text-decoration: none;
   color: black;
   font-weight: bold;
-  transition: color 0.3s ease; /* Add a smooth color transition effect */
+  transition: color 0.3s ease;
+  margin-left: 3vh;
+  font-size: 20px; /* Add a smooth color transition effect */
 }
 
 .navbar-right a:hover {
@@ -107,4 +111,15 @@ a{
  
 }
 
+.presentation-text{
+  width: 1044px;
+  height: 378px;
+  font-size: 40px;
+  margin-left: 46%;
+  padding-top:26vh ;
+}
+.creative-portfolio{
+  margin: 5px;
+  font-family: 'Hanken Grotesk', sans-serif;
 
+}
