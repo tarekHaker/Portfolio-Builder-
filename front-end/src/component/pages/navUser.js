@@ -3,7 +3,7 @@ import React from 'react'
 export default function NavUser() {
   return (
     <div>
-        <nav className="navbar">
+        <nav className="navbarUser">
         <div className="navbar-left">
         <a href='/'>
         <span id='logo' >Portfolio <span id='builder'>BUILDER</span></span>

@@ -1,7 +1,7 @@
 import React from 'react';
 import NavUser from './navUser';
 import MediaCard from "../portfiolo";
-import FloatingActionButtons from '../icon';
+import FloatingButtons from '../iconUser';
 
 
 
@@ -23,7 +23,7 @@ export default function User() {
   
 
      </div>
-     <FloatingActionButtons />
+     <FloatingButtons />
      </div>
 
     </div>

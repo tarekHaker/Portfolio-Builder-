@@ -12,6 +12,7 @@ import SkillsPage from "./component/pages/SkillsPage";
 import ExperiencePage from "./component/pages/ExperiencePage";
 import ProjectsPage from "./component/pages/ProjectsPage";
 import CallToActionPage from "./component/pages/CallToActionPage";
+import Welcome from "./component/pages/welcome";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
     path: "/call-to-action",
     element: <CallToActionPage />,
   },
+  {
+    path: "/welcome",
+    element: <Welcome />,
+  }
 ]);
 
 function App() {

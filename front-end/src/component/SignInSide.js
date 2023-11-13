@@ -91,7 +91,7 @@ export default function SignIn({setViews}) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={()=>{navigate('/user')}}
+              onClick={()=>{navigate('/welcome')}}
              
             >
               Sign In
