@@ -1,0 +1,63 @@
+.about-page {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #E1E2DB; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-header {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20px; 
+}
+
+.profile-header h1 {
+  font-size: 3em;
+  color: #333;
+  margin: 0;
+  font-weight: normal;
+}
+
+.profile-header h1 span {
+  font-weight: bold;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  width: 80%; 
+  max-width: 1200px;
+}
+
+.profile-image {
+  margin-right: 20px; 
+}
+
+.profile-image img {
+  display: block;
+  width: 200px; 
+  height: auto; 
+}
+
+.profile-content {
+  text-align: left;
+  flex-grow: 1; 
+}
+
+.profile-about-title {
+  font-size: 1.5em;
+  color: #333;
+  margin: 0;
+}
+
+.profile-about-content {
+  font-size: 1em;
+  line-height: 1.6;
+  color: #666;
+}
