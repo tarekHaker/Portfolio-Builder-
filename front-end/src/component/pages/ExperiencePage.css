@@ -1,0 +1,14 @@
+.experience-page {
+    background-image: url('/public/images/experience.jpg'); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+ 
+  
+
+  
