@@ -39,11 +39,10 @@ const UserController = {
             res.status(500).send('Error creating user');
         }
     },
-
-    getUserById: async (req, res) => {
+    getUserByEmail: async (req, res) => {
         try {
-            const userId = req.params.id;
-            const user = await User.findById(userId);
+            const email = req.query.email; // Get email from query parameter
+            const user = await User.findOne({ email });
 
             if (!user) {
                 return res.status(404).send('User not found');
@@ -51,11 +50,11 @@ const UserController = {
 
             res.json(user);
         } catch (error) {
-            console.error('Error getting user:', error);
-            res.status(500).send('Error getting user');
+            console.error('Error getting user by email:', error);
+            res.status(500).send('Error getting user by email');
         }
     },
-
+  
     updateUser: async (req, res) => {
         try {
             const userId = req.params.id;

@@ -18,14 +18,11 @@ const storage = multer.diskStorage({
   },
 });
 
-// Set up multer middleware
 const upload = multer({ storage: storage });
-router.post('/users', upload.single('image'), UserController.createUser);
-
-// Other user routes
+router.post('/user', upload.single('image'), UserController.createUser);
 router.get('/usersAll', UserController.getAllUsers);
-router.get('/users/:id', UserController.getUserById);
-router.put('/users/:id', UserController.updateUser);
-router.delete('/users/:id', UserController.deleteUser);
+router.get('/user', UserController.getUserByEmail);
+router.put('/user/:id', UserController.updateUser);
+router.delete('/user/:id', UserController.deleteUser);
 
 module.exports = router;
