@@ -15,11 +15,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 
 function SignUp() {
+
+
+  
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
+    confirmPassword: '', // New field for password confirmation
   });
 
   const handleInputChange = (event) => {
@@ -31,6 +35,12 @@ function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check if the password and confirmPassword match
+    if (user.password !== user.confirmPassword) {
+      console.error('Password and Confirm Password do not match');
+      return;
+    }
 
     try {
       const response = await axios.post('http://localhost:5000/users/user', user);
@@ -104,6 +114,18 @@ function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
+                  autoComplete="new-password"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirmPassword"
                   autoComplete="new-password"
                   onChange={handleInputChange}
                 />

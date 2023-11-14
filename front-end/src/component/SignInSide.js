@@ -18,26 +18,36 @@ import { useNavigate } from 'react-router-dom';
 function SignIn({ setViews }) {
   const navigate = useNavigate();
 
-  // Add state to manage authentication status
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
+  
     try {
-      const response = await Axios.post('http://localhost:5000/users/user', {
-        email: data.get('email'),
-        password: data.get('password'),
+      const response = await Axios.get('http://localhost:5000/users/user', {
+        params: {
+          email: data.get('email'),
+          password: data.get('password'),
+        },
       });
-
-      if (response.status === 200) {
-        // Authentication successful
-        setIsAuthenticated(true);
-        // You can also set user information or token in state/context here.
-        navigate('/welcome'); // Navigate to the welcome page
+  
+      console.log(response.data.message);
+  
+      if (response.status === 200 && response.data.message === 'User exists') {
+        // Check if the 'user' property exists in the response data
+        if (response.data.user) {
+          // Extract firstName and lastName from the response
+          const { firstName, lastName } = response.data.user;
+  
+          // Set isAuthenticated to true and navigate to /welcome with state
+          setIsAuthenticated(true);
+          navigate('/welcome', { state: { firstName, lastName } });
+        } else {
+          console.error('User data is missing in the response:', response.data);
+          setIsAuthenticated(false);
+        }
       } else {
-        // Authentication failed
         setIsAuthenticated(false);
       }
     } catch (error) {
@@ -45,6 +55,10 @@ function SignIn({ setViews }) {
       setIsAuthenticated(false);
     }
   };
+  
+  
+  
+  
 
   return (
     <ThemeProvider theme={createTheme()}>
