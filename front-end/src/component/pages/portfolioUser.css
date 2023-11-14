@@ -712,3 +712,6 @@ blockquote span{
         grid-row-gap: 20px;
     }
 }
+.im{
+    height: 70vh;
+}

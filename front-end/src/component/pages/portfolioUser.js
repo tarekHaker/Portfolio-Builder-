@@ -77,7 +77,7 @@ export default function PortfolioUser() {
                     <div class = "blog-wrapper-lg">
                      
                         <div class = "blog">
-                            <img src = {im1}/>
+                            <img className='im' src = {im1}/>
                             <div class = "blog-content">
                                 <span class = "badge">EDUCATION</span>
                                
@@ -92,7 +92,7 @@ export default function PortfolioUser() {
                         </div>
                       
                            <div class = "blog">
-                            <img src = {im2} />
+                            <img className='im' src = {im2} />
                             <div class = "blog-content">
                                 <span class = "badge">EDUCATION</span>
                                
@@ -107,7 +107,7 @@ export default function PortfolioUser() {
                         </div>
                        
                            <div class = "blog">
-                            <img src ={im3} />
+                            <img className='im' src ={im3} />
                             <div class = "blog-content">
                                 <span class = "badge">EXPERIENCE</span>
                                
@@ -122,7 +122,7 @@ export default function PortfolioUser() {
                         </div>
                       
                            <div class = "blog">
-                            <img src ={im4} />
+                            <img className='im' src={im4} />
                             <div class = "blog-content">
                                 <span class = "badge"> EXPERIENCES</span>
                                
@@ -130,7 +130,7 @@ export default function PortfolioUser() {
                                     DESCRIPTION
                                 </h3>
                                 <p class = "blog-text">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.  maxime harum,ipsum dolor sit amet consectetur adipisicing elit. Incidunt, eligendi! ullam amet error saepe.
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                 </p>
                                
                             </div>
