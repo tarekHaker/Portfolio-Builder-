@@ -3,11 +3,13 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom'
 
-export default function ContainedButtons() {
+export default function ContainedButtons({firstName, lastName, _id}) {
     const navigate = useNavigate();
   return (
     <Stack direction="row" spacing={2}>
-      <Button variant="contained" style={{marginBottom:'5vh'}}  onClick={()=>{navigate('/form')}}  >Start</Button>
+      <Button variant="contained" style={{marginBottom:'5vh'}}  onClick={()=>{         
+         navigate('/form', { state: { firstName, lastName,  _id } });
+}}  >Start</Button>
       
     </Stack>
   );

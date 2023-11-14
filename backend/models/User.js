@@ -6,14 +6,18 @@ const userSchema = new mongoose.Schema({
   password: String,
   firstName: String,
   lastName: String,
+  address: String,
+  phone: String,
   image: String,
   aboutMe: String,
-  dateEducation1: String,
-  titleEducation1: String,
-  descriptionEducation1: String,
-  dateEducation2: String,
-  titleEducation2: String,
-  descriptionEducation2: String,
+  location: String,
+  linkedin: String,
+  facebook: String,
+  skills: [String],
+  job: String,
+  jobdescription: String,
+  
+
 });
 
 const User = mongoose.model('User', userSchema);

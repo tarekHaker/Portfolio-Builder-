@@ -11,13 +11,8 @@ const UserController = {
                 password,
                 firstName,
                 lastName,
-                image,
-                dateEducation1,
-                titleEducation1,
-                descriptionEducation1,
-                dateEducation2,
-                titleEducation2,
-                descriptionEducation2,
+               
+               
             } = req.body;
 
             const user = new User({
@@ -25,13 +20,7 @@ const UserController = {
                 password,
                 firstName,
                 lastName,
-                image,
-                dateEducation1,
-                titleEducation1,
-                descriptionEducation1,
-                dateEducation2,
-                titleEducation2,
-                descriptionEducation2,
+            
             });
 
             await user.save();
@@ -56,67 +45,64 @@ const UserController = {
            
             console.log("password", password);
             console.log("user.password", user.password);
-            //const passwordMatch = await bcrypt.compare(password.trim(), user.password.trim());
-            //console.log("passwordMatch", passwordMatch);
-
+            
             if (password!==user.password) {
               return res.status(401).json({ message: 'Incorrect password' });
             }
             else{
                 console.log("matches")
             }
-          res.json({ message: 'User exists', user: { firstName: user.firstName, lastName: user.lastName } });
+          res.json({ message: 'User exists', user: { firstName: user.firstName, lastName: user.lastName, _id:user._id        } });
           } catch (error) {
             console.error('Error getting user by email:', error);
             res.status(500).json({ message: 'Error getting user by email' });
           }
       },
 
-    updateUser: async (req, res) => {
+      updateUser: async (req, res) => {
         try {
-            const userId = req.params.id;
+            const userId = req.params._id;
             const {
-                email,
-                password,
-                firstName,
-                lastName,
+                address,
+                phone,
                 image,
-                dateEducation1,
-                titleEducation1,
-                descriptionEducation1,
-                dateEducation2,
-                titleEducation2,
-                descriptionEducation2,
+                aboutMe,
+                location,
+                linkedin,
+                facebook,
+                skills,
+                job,
+                jobdescription,
             } = req.body;
-
+    
             const user = await User.findByIdAndUpdate(
                 userId,
                 {
-                    email,
-                    password,
-                    firstName,
-                    lastName,
+                    address,
+                    phone,
                     image,
-                    dateEducation1,
-                    titleEducation1,
-                    descriptionEducation1,
-                    dateEducation2,
-                    titleEducation2,
-                    descriptionEducation2,
+                    aboutMe,
+                    location,
+                    linkedin,
+                    facebook,
+                    skills,
+                    job,
+                    jobdescription,
                 },
                 { new: true }
             );
-
+    
             if (!user) {
                 return res.status(404).send('User not found');
             }
-
+    
             res.json(user);
         } catch (error) {
             console.error('Error updating user:', error);
             res.status(500).send('Error updating user');
         }
     },
+    
 
     deleteUser: async (req, res) => {
         try {

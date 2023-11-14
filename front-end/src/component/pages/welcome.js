@@ -7,21 +7,22 @@ export default function Welcome() {
   const location = useLocation();
   const { state } = location;
 
-  // Destructure firstName and lastName from the state if available
-  const { firstName, lastName } = state || {};
+  // Destructure firstName, lastName, and _id from the state if available
+  const { firstName, lastName, _id } = state || {};
 
   return (
-    <div class="container-welcome">
-      <div class="left-welcome"></div>
-      <div class="right-text-welcome">
-        <div class="container-text-right-welcome">
-          <div class="hi-user">
+    <div className="container-welcome">
+      <div className="left-welcome"></div>
+      <div className="right-text-welcome">
+        <div className="container-text-right-welcome">
+          <div className="hi-user">
             {/* Display the firstName and lastName */}
             {firstName && lastName && <h1>HELLO {firstName} {lastName}!</h1>}
           </div>
-          <div class="get-started">
+          <div className="get-started">
             <h2>Let's create a beautiful portfolio!</h2>
-            <ContainedButtons />
+            
+            <ContainedButtons firstName={firstName} lastName={lastName} _id={_id} />
           </div>
         </div>
       </div>

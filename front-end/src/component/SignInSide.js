@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Axios from 'axios'; // Import Axios
+import Axios from 'axios'; 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +15,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
+
 function SignIn({ setViews }) {
   const navigate = useNavigate();
 
@@ -29,20 +30,18 @@ function SignIn({ setViews }) {
         params: {
           email: data.get('email'),
           password: data.get('password'),
+          _id: data.get('_id'),
         },
       });
   
       console.log(response.data.message);
   
       if (response.status === 200 && response.data.message === 'User exists') {
-        // Check if the 'user' property exists in the response data
         if (response.data.user) {
-          // Extract firstName and lastName from the response
-          const { firstName, lastName } = response.data.user;
+          const { firstName, lastName, _id } = response.data.user;
   
-          // Set isAuthenticated to true and navigate to /welcome with state
           setIsAuthenticated(true);
-          navigate('/welcome', { state: { firstName, lastName } });
+          navigate('/welcome', { state: { firstName, lastName,  _id } });
         } else {
           console.error('User data is missing in the response:', response.data);
           setIsAuthenticated(false);
