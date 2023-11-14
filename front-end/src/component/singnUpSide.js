@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,36 +12,48 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+function SignUp() {
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+  
+  const [user, setUser] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '', // New field for password confirmation
+  });
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+  const handleInputChange = (event) => {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
     });
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Check if the password and confirmPassword match
+    if (user.password !== user.confirmPassword) {
+      console.error('Password and Confirm Password do not match');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/users/user', user);
+      console.log('User data saved:', response.data);
+    } catch (error) {
+      console.error('Error saving user data:', error);
+    }
+  };
+
+  const theme = createTheme();
+
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -69,6 +81,7 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -79,6 +92,7 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -89,6 +103,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -100,6 +115,19 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirmPassword"
+                  autoComplete="new-password"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -126,8 +154,9 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
 }
+
+export default SignUp;

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import Axios from 'axios'; // Import Axios
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,38 +13,55 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
-
-export default function SignIn({setViews}) {
+function SignIn({ setViews }) {
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  
+    try {
+      const response = await Axios.get('http://localhost:5000/users/user', {
+        params: {
+          email: data.get('email'),
+          password: data.get('password'),
+        },
+      });
+  
+      console.log(response.data.message);
+  
+      if (response.status === 200 && response.data.message === 'User exists') {
+        // Check if the 'user' property exists in the response data
+        if (response.data.user) {
+          // Extract firstName and lastName from the response
+          const { firstName, lastName } = response.data.user;
+  
+          // Set isAuthenticated to true and navigate to /welcome with state
+          setIsAuthenticated(true);
+          navigate('/welcome', { state: { firstName, lastName } });
+        } else {
+          console.error('User data is missing in the response:', response.data);
+          setIsAuthenticated(false);
+        }
+      } else {
+        setIsAuthenticated(false);
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+      setIsAuthenticated(false);
+    }
   };
+  
+  
+  
+  
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={createTheme()}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -85,19 +103,20 @@ export default function SignIn({setViews}) {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Link to='/' >
+            <Link to="/" >
               <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={()=>{navigate('/welcome')}}
-             
-            >
-              Sign In
-            </Button>
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
             </Link>
-            
+            {isAuthenticated ? (
+              // Show authentication message or other content
+              <div>Authenticated</div>
+            ) : null}
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -112,8 +131,9 @@ export default function SignIn({setViews}) {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
 }
+
+export default SignIn;

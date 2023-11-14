@@ -1,3 +1,6 @@
+const bcrypt = require('bcrypt'); 
+const saltRounds = 10; 
+
 const User = require('../models/User');
 
 const UserController = {
@@ -39,22 +42,35 @@ const UserController = {
             res.status(500).send('Error creating user');
         }
     },
-
-    getUserById: async (req, res) => {
+    getUserByEmail: async (req, res) => {
         try {
-            const userId = req.params.id;
-            const user = await User.findById(userId);
-
+            const email = req.query.email;
+            const password = req.query.password;
+        
+            const user = await User.findOne({ email });
+        
             if (!user) {
-                return res.status(404).send('User not found');
+              return res.status(404).json({ message: 'User not found' });
             }
+        
+           
+            console.log("password", password);
+            console.log("user.password", user.password);
+            //const passwordMatch = await bcrypt.compare(password.trim(), user.password.trim());
+            //console.log("passwordMatch", passwordMatch);
 
-            res.json(user);
-        } catch (error) {
-            console.error('Error getting user:', error);
-            res.status(500).send('Error getting user');
-        }
-    },
+            if (password!==user.password) {
+              return res.status(401).json({ message: 'Incorrect password' });
+            }
+            else{
+                console.log("matches")
+            }
+          res.json({ message: 'User exists', user: { firstName: user.firstName, lastName: user.lastName } });
+          } catch (error) {
+            console.error('Error getting user by email:', error);
+            res.status(500).json({ message: 'Error getting user by email' });
+          }
+      },
 
     updateUser: async (req, res) => {
         try {
