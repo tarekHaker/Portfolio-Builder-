@@ -7,23 +7,7 @@ const AboutPage = () => {
     imageUrl: "/images/about.jpg",
   });
 
-  useEffect(() => {
-    // Fetch the profile data from the backend
-    // Uncomment and modify the following code when your backend is ready
-    /*
-    fetch("/api/profile") // This should be the endpoint where your profile data is located
-      .then((response) => response.json())
-      .then((data) => {
-        setProfile({
-          name: data.name,
-          imageUrl: data.imageUrl,
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching profile data:", error);
-      });
-    */
-  }, []);
+
 
   return (
     <div className="about-page">

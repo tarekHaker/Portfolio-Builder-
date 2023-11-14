@@ -13,6 +13,7 @@ import ExperiencePage from "./component/pages/ExperiencePage";
 import ProjectsPage from "./component/pages/ProjectsPage";
 import CallToActionPage from "./component/pages/CallToActionPage";
 import Welcome from "./component/pages/welcome";
+import PortfolioUser from "./component/pages/portfolioUser";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
   {
     path: "/welcome",
     element: <Welcome />,
+  },
+  {
+    path: "/portfolio",
+    element: <PortfolioUser />,
   }
 ]);
 
