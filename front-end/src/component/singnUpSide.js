@@ -15,15 +15,17 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 
 function SignUp() {
-
-
-  
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    confirmPassword: '', // New field for password confirmation
+    confirmPassword: '',
+    address: '',    
+    phone: '',    
+    location: '',   
+    linkedin: '',   
+    facebook: '',   
   });
 
   const handleInputChange = (event) => {
@@ -35,20 +37,26 @@ function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Check if the password and confirmPassword match
+  
     if (user.password !== user.confirmPassword) {
       console.error('Password and Confirm Password do not match');
       return;
     }
-
+  
     try {
       const response = await axios.post('http://localhost:5000/users/user', user);
       console.log('User data saved:', response.data);
+  
+      if (response.status === 201) {
+        window.alert('Registration done successfully!');
+        window.location.href = '/signIn';
+
+      }
     } catch (error) {
       console.error('Error saving user data:', error);
     }
   };
+  
 
   const theme = createTheme();
 
@@ -127,6 +135,56 @@ function SignUp() {
                   type="password"
                   id="confirmPassword"
                   autoComplete="new-password"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="address"
+                  label="Address"
+                  id="address"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="phone"
+                  label="Phone"
+                  id="phone"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="location"
+                  label="Location"
+                  id="location"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="linkedin"
+                  label="Linkedin"
+                  id="linkedin"
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="facebook"
+                  label="Facebook"
+                  id="facebook"
                   onChange={handleInputChange}
                 />
               </Grid>

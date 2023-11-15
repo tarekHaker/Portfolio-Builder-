@@ -11,7 +11,11 @@ const UserController = {
                 password,
                 firstName,
                 lastName,
-               
+                address, 
+                 phone, 
+                 location,
+                 linkedin,
+                 facebook,
                
             } = req.body;
 
@@ -20,7 +24,11 @@ const UserController = {
                 password,
                 firstName,
                 lastName,
-            
+                address,  
+                phone, 
+                location,
+                linkedin,
+                facebook,
             });
 
             await user.save();
@@ -62,32 +70,25 @@ const UserController = {
       updateUser: async (req, res) => {
         try {
             const userId = req.params._id;
+            console.log("id", userId);
             const {
-                address,
-                phone,
+               
                 image,
                 aboutMe,
-                location,
-                linkedin,
-                facebook,
                 skills,
                 job,
                 jobdescription,
+                
             } = req.body;
     
             const user = await User.findByIdAndUpdate(
                 userId,
                 {
-                    address,
-                    phone,
                     image,
-                    aboutMe,
-                    location,
-                    linkedin,
-                    facebook,
-                    skills,
-                    job,
-                    jobdescription,
+                aboutMe,
+                skills,
+                job,
+                jobdescription,
                 },
                 { new: true }
             );
