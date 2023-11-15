@@ -8,6 +8,7 @@ import FloatingActionButtons from '../icon';
 import InputFileUpload from '../uploadButton';
 import axios from 'axios'; 
 import { useLocation } from 'react-router-dom'; 
+import {BasicButtons} from '../button'
 
 const ImagePreview = ({ image }) => {
   if (!image) return null;
@@ -113,8 +114,9 @@ export default function Form() {
           </div>
 
           <ImagePreview image={uploadedImage} />
-
-          <FloatingActionButtons onClick={handleSubmit} seize={'small'} />
+          
+            <BasicButtons />
+          {/* <FloatingActionButtons onClick={handleSubmit} seize={'small'} /> */}
         </div>
       </Box>
     </>

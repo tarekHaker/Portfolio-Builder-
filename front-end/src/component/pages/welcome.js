@@ -1,5 +1,5 @@
 import React from 'react';
-import ContainedButtons from '../button';
+import {ContainedButtons} from '../button';
 import { useLocation } from 'react-router-dom';
 
 export default function Welcome() {
