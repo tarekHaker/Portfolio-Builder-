@@ -30,8 +30,8 @@ export default function PortfolioUser() {
                 <nav class = "top-nav">
                     <ul>
                        
-                        <li><a href = "/"  class = "active">Home</a></li>
-                        <li><a href = "contact.html">Contact</a></li>
+                        <li><a href = "/portfolio"  class = "active">Home</a></li>
+                        <li><a href = "/aboutPortfolio">Contact</a></li>
                     </ul>
                 </nav>
                 <span class = "search-icon">

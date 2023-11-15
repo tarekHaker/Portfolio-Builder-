@@ -14,6 +14,7 @@ import ProjectsPage from "./component/pages/ProjectsPage";
 import CallToActionPage from "./component/pages/CallToActionPage";
 import Welcome from "./component/pages/welcome";
 import PortfolioUser from "./component/pages/portfolioUser";
+import AboutPortfolio from "./component/pages/aboutPortfolio";
 
 const router = createBrowserRouter([
   {
@@ -67,7 +68,11 @@ const router = createBrowserRouter([
   {
     path: "/portfolio",
     element: <PortfolioUser />,
-  }
+  },
+  {
+    path: "/aboutPortfolio",
+    element: <AboutPortfolio />,
+  },
 ]);
 
 function App() {

@@ -449,6 +449,7 @@ blockquote span{
     outline: none;
     border-radius: 5px;
 }
+
 .contact-bottom .form{
     padding: 0 20px;
 }
@@ -530,6 +531,7 @@ blockquote span{
         grid-template-columns: repeat(2, 1fr);
         grid-column-gap: 20px;
     }
+  
 }
 
 @media screen and (min-width: 800px){
@@ -550,6 +552,8 @@ blockquote span{
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 20px;
     }
+  
+
     
 }
 
@@ -591,6 +595,7 @@ blockquote span{
         display: flex;
         justify-content: center;
         align-items: center;
+     
         font-size: 24px;
         cursor: pointer;
         transition: var(--transition);
@@ -601,13 +606,21 @@ blockquote span{
 
     /* section five */
     .contact-middle{
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
     .contact-bottom{
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-column-gap: 40px;
     }
+    form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 90vw;
+        margin-left: 0vw;
+    }
+
 }
 
 
@@ -653,14 +666,14 @@ blockquote span{
 
     /* section three */
     .gallery{
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media screen and (min-width: 1400px){
     /* section four */
     .blog-wrapper-sm{
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
