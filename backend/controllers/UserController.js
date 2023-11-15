@@ -71,25 +71,13 @@ const UserController = {
         try {
             const userId = req.params._id;
             console.log("id", userId);
-            const {
-               
-                image,
-                aboutMe,
-                skills,
-                job,
-                jobdescription,
-                
-            } = req.body;
-    
+         
+            const data=req.body;
+            console.log("reqqq",req.body);
+           
             const user = await User.findByIdAndUpdate(
                 userId,
-                {
-                    image,
-                aboutMe,
-                skills,
-                job,
-                jobdescription,
-                },
+               data,
                 { new: true }
             );
     

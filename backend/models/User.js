@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   
   image: String,
   aboutMe: String,
-  skills: [String],
+  skills: String,
   job: String,
   jobdescription: String,
   
