@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 import {BasicButtons} from '../button'
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button'; // Import Button
 
 const ImagePreview = ({ image }) => {
   if (!image) return null;
@@ -17,6 +18,8 @@ const ImagePreview = ({ image }) => {
 };
 
 export default function Form() {
+  const [portfolioCount, setPortfolioCount] = useState(0);
+
   const [uploadedImage, setUploadedImage] = useState(null);
   const [skills, setSkills] = useState(''); 
   const [job, setJob] = useState(''); 
@@ -34,7 +37,19 @@ export default function Form() {
   });
   const { firstName, lastName, _id } = state || {};
 console.log("id", _id)
- 
+useEffect(() => {
+  const fetchPortfolioCount = async () => {
+    try {
+
+     const response = await axios.get(`http://localhost:5000/portfolios/portfolios/count/${_id}`);
+     setPortfolioCount(response.data.count);
+    } catch (error) {
+      console.error('Error fetching portfolio count:', error);
+    }
+  };
+
+  fetchPortfolioCount();
+}, [_id]);
 
   const handleFileChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -148,6 +163,14 @@ console.log("id", _id)
 
           <BasicButtons onClick={handleSubmit} firstName={firstName} lastName={lastName} _id={_id}
            handleSubmit={handleSubmit} />
+     <Button
+     variant="contained"
+       size="small"
+     style={{ marginLeft: 'auto' }}
+     onClick={() => navigate(`/user?id=${_id}&firstName=${firstName}&lastName=${lastName}&portfolioCount=${portfolioCount}`)}
+     >
+      Pass
+      </Button>
         </div>
       </Box>
     </>

@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 const PortfolioController = require('../controllers/PortfolioController');
+router.get('/portfolios/count/:id', PortfolioController.countPortfoliosByUserId);
 
 router.get('/portfoliosAll', PortfolioController.getAllPortfolios);
 router.post('/portfolios', upload.single('image'),PortfolioController.createPortfolio);

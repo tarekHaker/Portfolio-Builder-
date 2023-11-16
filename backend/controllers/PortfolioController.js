@@ -1,26 +1,39 @@
 const Portfolio = require('../models/Portfolio');
 
 const PortfolioController = {
-    createPortfolio: async (req, res) => {
+    
+    countPortfoliosByUserId: async (req, res) => {
+        try {
+          const userId = req.params.id;
+          const count = await Portfolio.countDocuments({ user: userId });
+    console.log(count);
+          res.json({ count });
+        } catch (error) {
+          console.error('Error counting portfolios:', error);
+          res.status(500).json({ error: 'Error counting portfolios' });
+        }
+      },
+
+      createPortfolio: async (req, res) => {
         try {
           const { userId, skills, job, jobdescription, bibliography } = req.body;
-      
+    
           // Check if an image was uploaded
           let image = {};
           if (req.file) {
             image.data = req.file.buffer; // Assuming 'buffer' contains the image data
             image.contentType = req.file.mimetype;
           }
-      
+    
           const portfolio = new Portfolio({
-            userId,
+            user: userId, // Set the user field with the provided userId
             skills,
             job,
             jobdescription,
             image,
             bibliography,
           });
-      
+    
           await portfolio.save();
           res.status(201).json(portfolio);
         } catch (error) {
@@ -28,7 +41,6 @@ const PortfolioController = {
           res.status(500).json({ error: 'Error creating portfolio' });
         }
       },
-      
     getPortfolioById: async (req, res) => {
         try {
             const portfolioId = req.params.id;

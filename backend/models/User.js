@@ -11,10 +11,8 @@ const userSchema = new mongoose.Schema({
   location: String,
   linkedin: String,
   facebook: String,
-  
-  image: String,
+  image: { data: Buffer, contentType: String }, 
   aboutMe: String,
- 
   Education1: String,
   Education2: String, 
 
