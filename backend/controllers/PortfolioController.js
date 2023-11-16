@@ -3,32 +3,32 @@ const Portfolio = require('../models/Portfolio');
 const PortfolioController = {
     createPortfolio: async (req, res) => {
         try {
-           const { user, skills, job, jobdescription, _id } = req.body;
-          // const { userId, skills, job, jobdescription } = req.body;
-
-          // console.log("userId",req.body)
-          //  console.log("userId",userId)
-     // console.log("id",_id)
-            if (!_id) {
-              return res.status(400).json({ error: "'_id' is required in the request body" });
-            }
+          const { userId, skills, job, jobdescription, bibliography } = req.body;
       
-           
-            const portfolio = new Portfolio({
-                user: _id, 
-                skills,
-                job,
-                jobdescription,
-                   });
-            await portfolio.save();
-                  res.status(201).json(portfolio);
+          // Check if an image was uploaded
+          let image = {};
+          if (req.file) {
+            image.data = req.file.buffer; // Assuming 'buffer' contains the image data
+            image.contentType = req.file.mimetype;
+          }
+      
+          const portfolio = new Portfolio({
+            userId,
+            skills,
+            job,
+            jobdescription,
+            image,
+            bibliography,
+          });
+      
+          await portfolio.save();
+          res.status(201).json(portfolio);
         } catch (error) {
           console.error('Error creating portfolio:', error);
-          res.status(500).send('Error creating portfolio');
+          res.status(500).json({ error: 'Error creating portfolio' });
         }
       },
-
-
+      
     getPortfolioById: async (req, res) => {
         try {
             const portfolioId = req.params.id;
