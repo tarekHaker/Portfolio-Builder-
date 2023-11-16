@@ -76,33 +76,33 @@ console.log("id", _id)
   const [data, setData] = useState({})
  
 
+ const handleSubmit = async () => {
+  setData({
+    image: uploadedImage,
+    aboutMe: aboutMe,
+    skills: skills,
+    job: job,
+    jobDescription: jobDescription,
+    userId: _id, 
+  });
 
-  const handleSubmit = async () => {
-    setData( 
-       {   image:uploadedImage,
-      aboutMe: aboutMe,
-      skills: skills,
-      job: job,
-      jobDescription:jobDescription
-  
-     })
-     console.log("ikram",data);
 
-         console.log('_id:', _id);
-    try {
-      console.log('Form Data:', data);
+  console.log("ikram", data);
 
-      const response = await axios.put(`http://localhost:5000/users/user/${_id}`, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      navigate('/user');
-      console.log('User data updated:', response.data);
-    } catch (error) {
-      console.error('Error updating user data:', error);
-    }
-  };
+  console.log('_id:', _id);
+  try {
+    const response = await axios.post(`http://localhost:5000/portfolios/portfolios/`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    navigate('/user');
+    console.log('Portfolio created:', response.data);
+  }  catch (error) {
+    console.error('Error creating portfolio:', error);
+  }
+};
+
 
   return (
     <>
@@ -133,7 +133,7 @@ console.log("id", _id)
           />
           <TextField
             label="Job"
-            name="job"
+            name="job1"
             type="search"
             variant="standard"
             style={{ width: '100%', marginBottom: '20px' }}
@@ -142,7 +142,7 @@ console.log("id", _id)
           />
           <TextField
             label="Job Description"
-            name="jobdescription"
+            name="jobdescription1"
             type="search"
             variant="standard"
             style={{ width: '100%', marginBottom: '20px' }}
