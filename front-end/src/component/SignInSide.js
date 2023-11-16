@@ -16,7 +16,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 
+
 function SignIn({ setViews }) {
+  const defaultTheme = createTheme();
   const navigate = useNavigate();
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -60,7 +62,8 @@ function SignIn({ setViews }) {
   
 
   return (
-    <ThemeProvider theme={createTheme()}>
+    
+    <ThemeProvider theme={defaultTheme} >
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -132,6 +135,7 @@ function SignIn({ setViews }) {
         </Box>
       </Container>
     </ThemeProvider>
+   
   );
 }
 

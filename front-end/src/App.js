@@ -15,6 +15,7 @@ import CallToActionPage from "./component/pages/CallToActionPage";
 import Welcome from "./component/pages/welcome";
 import PortfolioUser from "./component/pages/portfolioUser";
 import AboutPortfolio from "./component/pages/aboutPortfolio";
+import FormUpdate from './component/pages/update'
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,11 @@ const router = createBrowserRouter([
   {
     path: "/aboutPortfolio",
     element: <AboutPortfolio />,
+  },
+  ,
+  {
+    path: "/update",
+    element: <FormUpdate />,
   },
 ]);
 

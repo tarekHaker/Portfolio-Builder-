@@ -5,8 +5,10 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 export default function MediaCard() {
+  const navigate = useNavigate();
   return (
     <Card sx={{ maxWidth: 300, margin:'3%' }}>
       <CardMedia
@@ -23,7 +25,7 @@ export default function MediaCard() {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
+        <Button size="small" navigate onClick={()=>{navigate('/update')}}>Edit</Button>
         <Button size="small">Show </Button>
       </CardActions>
     </Card>

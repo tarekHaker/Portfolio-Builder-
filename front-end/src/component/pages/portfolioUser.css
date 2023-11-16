@@ -613,7 +613,7 @@ blockquote span{
         grid-template-columns: repeat(2, 1fr);
         grid-column-gap: 40px;
     }
-    form{
+    .form{
         display: flex;
         flex-direction: column;
         justify-content: center;
