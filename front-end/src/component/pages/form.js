@@ -98,7 +98,13 @@ useEffect(() => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      navigate('/user');
+      navigate(`/user?id=${_id}&firstName=${firstName}&lastName=${lastName}`, {
+        state: {
+          image: uploadedImage,
+          job: job,
+          jobDescription: jobdescription,
+        },
+      });
       console.log('Portfolio created:', response.data);
     } catch (error) {
       console.error('Error creating portfolio:', error);
