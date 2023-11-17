@@ -48,7 +48,7 @@ export default function PortfolioUser() {
         <header class="header">
           <div class="nav-section">
             <div class="brand-and-navBtn">
-              <span class="brand-name">Portfolio BUILDER</span>
+              <span class="brand-name">{userData.firstName}LAB</span>
               <span class="navBtn flex">
                 <i class="fas fa-bars"></i>
               </span>
@@ -163,21 +163,11 @@ export default function PortfolioUser() {
                 {userData.firstName} {userData.lastName}
               </h2>
 
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-                obcaecati sapiente minima itaque nam modi libero optio vitae
-                animi, praesentium quis commodi fugit quasi nostrum nihil veniam
-                nisi suscipit cumque ducimus error doloribus est voluptatum at?
-                Et aut mollitia quia.
-              </p>
+              <p>Let's work together</p>
             </div>
             <div>
               <h3>Free Subscription!</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit,
-                facere eius! Ipsam laborum modi, cumque dolor incidunt animi nam
-                magni.
-              </p>
+              <p></p>
 
               <div class="subs">
                 <i class="fas fa-envelope"></i>
