@@ -92,11 +92,15 @@ export default function User() {
 
                 portfolioItems.push(
                   <Card key={portfolioItem._id} sx={{ maxWidth: 300, margin: '3%' }}>
-                    <CardMedia
-                      sx={{ height: 140 }}
-                      image={imageSrc || 'https://www.farrer.co.uk/globalassets/work-from-home.jpg?width=840&height=473&mode=crop'}
-                      title={portfolioItem.job}
-                    />
+              <CardMedia
+                sx={{ height: 140 }}
+                image={
+                  portfolioItem.image && portfolioItem.image.contentType && portfolioItem.image.data
+                    ? `data:${portfolioItem.image.contentType};base64,${portfolioItem.image.data.toString('base64')}`
+                    : 'https://www.farrer.co.uk/globalassets/work-from-home.jpg?width=840&height=473&mode=crop'
+                }
+                title={portfolioItem.job}
+              />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
                         {portfolioItem.job}

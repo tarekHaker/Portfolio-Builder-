@@ -20,6 +20,24 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.get('/portfolio/:id', async (req, res) => {
+  try {
+    const portfolio = await Portfolio.findById(req.params.id);
+
+    if (!portfolio) {
+      return res.status(404).json({ error: 'Portfolio not found' });
+    }
+
+    // Convert the image buffer to base64 using sharp
+    const base64Image = await sharp(portfolio.image.data).toFormat('jpeg').toBuffer();
+    const base64ImageString = `data:${portfolio.image.contentType};base64,${base64Image.toString('base64')}`;
+    const updatedPortfolio = { ...portfolio.toObject(), image: base64ImageString };
+    res.json(updatedPortfolio);
+  } catch (error) {
+    console.error('Error fetching portfolio:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 router.get('/portfolios/:id', PortfolioController.getPortfolioByUserId);
 
 router.get('/portfolios/count/:id', PortfolioController.countPortfoliosByUserId);

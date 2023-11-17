@@ -41,6 +41,9 @@ npm install cors
 npm install multer
 npm install axios
 
+To display the image in the CardMedia component, you can use the sharp library to convert the image buffer to a base64-encoded string. 
+install the sharp library in frontend and backend : npm install sharp
+
 npm run db:setup
 the appropriate database configuration is in the index.js file.
 Start the application with two separate commands:
