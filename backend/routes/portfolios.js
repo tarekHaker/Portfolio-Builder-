@@ -1,50 +1,41 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const crypto = require('crypto');
-const PortfolioController = require('../controllers/PortfolioController');
-const Portfolio = require('../models/Portfolio');
+const UserController = require("../controllers/UserController");
+const multer = require("multer");
+const crypto = require("crypto");
 
-  const generateFileName = (bytes = 32) =>
-  crypto.randomBytes(bytes).toString('hex');
+const generateFileName = (bytes = 32) =>
+  crypto.randomBytes(bytes).toString("hex");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'routes/uploads/');
+    cb(null, "routes/uploads/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = generateFileName();
-    cb(null, uniqueSuffix + '.jpg');
+    cb(null, uniqueSuffix + ".jpg");
   },
 });
 
 const upload = multer({ storage: storage });
+const PortfolioController = require("../controllers/PortfolioController");
+router.get(
+  "/portfolios/count/:id",
+  PortfolioController.countPortfoliosByUserId
+);
 
-router.get('/portfolio/:id', async (req, res) => {
-  try {
-    const portfolio = await Portfolio.findById(req.params.id);
-
-    if (!portfolio) {
-      return res.status(404).json({ error: 'Portfolio not found' });
-    }
-
-    // Convert the image buffer to base64 using sharp
-    const base64Image = await sharp(portfolio.image.data).toFormat('jpeg').toBuffer();
-    const base64ImageString = `data:${portfolio.image.contentType};base64,${base64Image.toString('base64')}`;
-    const updatedPortfolio = { ...portfolio.toObject(), image: base64ImageString };
-    res.json(updatedPortfolio);
-  } catch (error) {
-    console.error('Error fetching portfolio:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-router.get('/portfolios/:id', PortfolioController.getPortfolioByUserId);
-
-router.get('/portfolios/count/:id', PortfolioController.countPortfoliosByUserId);
-router.get('/portfoliosAll', PortfolioController.getAllPortfolios);
-router.post('/portfolios', upload.single('image'), PortfolioController.createPortfolio);
-router.get('/portfolios/:id', PortfolioController.getPortfolioById);
-router.put('/portfolios/:id', PortfolioController.updatePortfolio);
-router.delete('/portfolios/:id', PortfolioController.deletePortfolio);
+router.get("/portfoliosAll", PortfolioController.getAllPortfolios);
+router.post(
+  "/portfolios",
+  upload.single("image"),
+  PortfolioController.createPortfolio
+);
+router.get("/portfolios/:_id", PortfolioController.getPortfolioById);
+router.put("/portfolios/:_id", PortfolioController.updatePortfolio);
+router.delete("/portfolios/:_id", PortfolioController.deletePortfolio);
+router.get(
+  "/portfolios/user/:userId",
+  PortfolioController.getPortfolioByUserId
+);
 
 module.exports = router;

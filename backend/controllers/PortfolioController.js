@@ -1,20 +1,19 @@
 const Portfolio = require("../models/Portfolio");
 
 const PortfolioController = {
-    getPortfolioByUserId: async (req, res) => {
-        try {
-          const userId = req.params.id;
-          console.log(userId);
-          const portfolios = await Portfolio.find({ user: userId });
-          console.log(portfolios);
-      
-          res.json(portfolios);
-        } catch (error) {
-          console.error("Error getting portfolios:", error);
-          res.status(500).send("Error getting portfolios");
-        }
-      },
-      
+  getPortfolioByUserId: async (req, res) => {
+    try {
+      const userId = req.params_id;
+      console.log("userId", userId);
+      const portfolio = await Portfolio.findOne({ user: userId });
+      console.log(portfolio);
+
+      res.json(portfolio);
+    } catch (error) {
+      console.error("Error getting portfolio:", error);
+      res.status(500).send("Error getting portfolio");
+    }
+  },
 
   countPortfoliosByUserId: async (req, res) => {
     try {
@@ -45,14 +44,12 @@ const PortfolioController = {
         descriptioneducation1,
         descriptioneducation2,
       } = req.body;
-  
-      const image = req.file
-        ? {
-            data: req.file.buffer,
-            contentType: req.file.mimetype,
-          }
-        : {};
-  
+      let image = {};
+      if (req.file) {
+        image.data = req.file.buffer;
+        image.contentType = req.file.mimetype;
+      }
+
       const portfolio = new Portfolio({
         user: userId,
         skills,
@@ -69,7 +66,7 @@ const PortfolioController = {
         descriptioneducation2,
         image,
       });
-  
+
       await portfolio.save();
       res.status(201).json(portfolio);
     } catch (error) {
@@ -77,13 +74,12 @@ const PortfolioController = {
       res.status(500).json({ error: "Error creating portfolio" });
     }
   },
-  
 
   getPortfolioById: async (req, res) => {
     try {
-      const portfolioId = req.params.id;
-      const portfolio = await Portfolio.findById(portfolioId);
-
+      const portfolioId = req.params._id;
+      const portfolio = await Portfolio.findOne({ user: portfolioId });
+      console.log("test", req.params);
       if (!portfolio) {
         return res.status(404).send("Portfolio not found");
       }
@@ -94,45 +90,33 @@ const PortfolioController = {
       res.status(500).send("Error getting portfolio");
     }
   },
+
   updatePortfolio: async (req, res) => {
     try {
-      console.log('Request Body:', req.body);
-  
       const portfolioId = req.params.id;
-      const { bibliography, skills, job, jobdescription, image } = req.body;
-  
-      // Check if at least one field is provided for update
-      if (!(bibliography || skills || job || jobdescription)) {
-        return res.status(400).json({
-          error: 'Invalid request body. Please provide at least one field to update (bibliography, skills, job, jobdescription).',
-        });
-      }
-  
-      // Validate other conditions if needed (e.g., check ownership)
-      // ...
-  
+      const { user, bibliography, skills } = req.body;
+
       const portfolio = await Portfolio.findByIdAndUpdate(
         portfolioId,
         {
-          ...(bibliography && { bibliography }),
-          ...(skills && { skills }),
-          ...(job && { job }),
-          ...(jobdescription && { jobdescription }),
+          user,
+          bibliography,
+          skills,
         },
         { new: true }
       );
-  
+
       if (!portfolio) {
-        return res.status(404).json({ error: 'Portfolio not found' });
+        return res.status(404).send("Portfolio not found");
       }
-  
+
       res.json(portfolio);
     } catch (error) {
-      console.error('Error updating portfolio:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      console.error("Error updating portfolio:", error);
+      res.status(500).send("Error updating portfolio");
     }
   },
-  
+
   deletePortfolio: async (req, res) => {
     try {
       const portfolioId = req.params.id;
