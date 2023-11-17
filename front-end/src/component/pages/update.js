@@ -21,7 +21,6 @@ export default function FormUpdate() {
   });
   const location = useLocation();
   const { state } = location;
- // const { firstName, lastName, _id } = state || {};
 
 
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -38,7 +37,6 @@ export default function FormUpdate() {
       setJob(state.job);
       setJobDescription(state.jobdescription);
       setBibliography(state.bibliography);
-      // Assuming state.image is a file URL or null
       setUploadedImage(state.image ? new File([], state.image.name) : null);
     }
   }, [state]);
@@ -71,52 +69,37 @@ console.log("Bibliography",bibliography)
       setJob(state.job || '');
       setJobDescription(state.jobdescription || '');
       setBibliography(state.bibliography || '');
-      // Assuming state.image is a file URL or null
-     // setUploadedImage(state.image ? new File([], state.image.name) : null);
-      // Make sure to set userId if available in state
+      setUploadedImage(state.image ? new File([], state.image.name) : null);
       setData((prevData) => ({ ...prevData, userId: _id || '' }));
     }
   }, [state]);
   //console.log("utilisateur", userId);
   const handleSubmit = async () => {
-    if (!state || !_id) {
-      console.error('Error: userId not available in the state.');
-      return;
-    }
-  
-    const formData = new FormData();
-    formData.append('bibliography', bibliography);
-    formData.append('skills', skills);
-    formData.append('job', job);
-    formData.append('jobdescription', jobdescription);
-   // formData.append('userId', .userIstated);
-  
-    // Check if at least one of the fields has a non-empty value
-    if (!bibliography && !skills && !job && !jobdescription) {
-      console.error('Error: At least one of the fields (bibliography, skills, job, jobdescription) must be non-empty.');
-      return;
-    }
+    const requestData = {
+      bibliography,
+    image: uploadedImage,
+      skills,
+      job,
+      jobdescription,
+      _id,
+    };
   
     try {
-      console.log('formData', formData);
-      console.log('userID',  _id);
-  
-      const response = await axios.put(`http://localhost:5000/portfolios/portfolios/${ _id}`, formData, {
+      const response = await axios.put(`http://localhost:5000/portfolios/portfolios/${_id}`, requestData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       });
-  
-      console.log('Response:', response.data);
-     // navigate(`/user?id=${state.userId}`);
-      
-      console.log('Portfolio updated:', response.data);
+
+      window.alert('Update done successful');
+      navigate('/portfolio');
+     
+
+      console.log('Portfolio created:', response.data);
     } catch (error) {
       console.error('Error updating portfolio:', error);
-      console.log('Error response:', error.response.data); // Log the detailed error response
     }
   };
-  
   
   return (
     <>
@@ -169,7 +152,7 @@ console.log("Bibliography",bibliography)
           <div style={{ width: '30%', marginTop: '5vh' }}>
             <InputFileUpload onChange={handleFileChange} />
           </div>
-          {/* <ImagePreview image={uploadedImage} /> */}
+        <ImagePreview image={uploadedImage} />
           <Button
             variant="contained"
             size="small"

@@ -97,18 +97,23 @@ const PortfolioController = {
   updatePortfolio: async (req, res) => {
     try {
       console.log('Request Body:', req.body);
-
-      const portfolioId = req.params.id;
-      const { userId, bibliography, skills, job, jobdescription } = req.body;
   
-      if (!userId || (!bibliography && !skills && !job && !jobdescription)) {
-        return res.status(400).json({ error: 'Invalid request body. Please provide userId and at least one field to update (bibliography, skills, job, jobdescription).' });
+      const portfolioId = req.params.id;
+      const { bibliography, skills, job, jobdescription, image } = req.body;
+  
+      // Check if at least one field is provided for update
+      if (!(bibliography || skills || job || jobdescription)) {
+        return res.status(400).json({
+          error: 'Invalid request body. Please provide at least one field to update (bibliography, skills, job, jobdescription).',
+        });
       }
+  
+      // Validate other conditions if needed (e.g., check ownership)
+      // ...
   
       const portfolio = await Portfolio.findByIdAndUpdate(
         portfolioId,
         {
-          user: userId,
           ...(bibliography && { bibliography }),
           ...(skills && { skills }),
           ...(job && { job }),
@@ -123,12 +128,11 @@ const PortfolioController = {
   
       res.json(portfolio);
     } catch (error) {
-      console.error("Error updating portfolio:", error);
+      console.error('Error updating portfolio:', error);
       res.status(500).json({ error: 'Internal server error' });
     }
   },
   
-
   deletePortfolio: async (req, res) => {
     try {
       const portfolioId = req.params.id;

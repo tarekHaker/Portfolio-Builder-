@@ -53,24 +53,23 @@ export default function User() {
   const handleEditClick = (portfolioItem) => {
     navigate('/update', {
       state: {
-        userId: portfolioItem.user,
+        _id: portfolioItem._id,
+        userId: portfolioItem.user, // Add userId to the state
         skills: portfolioItem.skills,
         job: portfolioItem.job,
         jobdescription: portfolioItem.jobdescription,
         bibliography: portfolioItem.bibliography,
         experience1: portfolioItem.experience1,
-        experiencedescription1: portfolioItem.experiencedescription1,
-        experience2: portfolioItem.experience2,
-        experiencedescription2: portfolioItem.experiencedescription2,
-        education1: portfolioItem.education1,
-        education2: portfolioItem.education2,
-        descriptioneducation1: portfolioItem.descriptioneducation1,
-        descriptioneducation2: portfolioItem.descriptioneducation2,
+        // ... (other fields)
         image: portfolioItem.image,
-        _id: portfolioItem._id,
       },
     });
   };
+  const handleButtonClick = (portfolioItem) => {
+    handleEditClick(portfolioItem);
+    navigate('/portfolio');
+  };
+  
   
   return (
     <div>
@@ -108,20 +107,16 @@ export default function User() {
                     </CardContent>
                     <CardActions>
                     <Button
-         size="small"
-         onClick={() => {
-         console.log('Editing portfolio:', { ...portfolios[i] });
-           navigate('/update', {
-            state: {
-        ...portfolios[i], 
-      },
-    });
-  }}
->
-  Edit
-</Button>
+            size="small"
+            onClick={() => handleEditClick(portfolios[i])}>
 
-                      <Button size="small">Show </Button>
+          Edit
+          </Button>
+
+          <Button size="small" onClick={() => handleButtonClick(portfolios[i])}>
+       Edit
+      </Button>
+
                     </CardActions>
                   </Card>
                 );
