@@ -1,16 +1,10 @@
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
-import FloatingActionButtons from '../icon';
-import InputFileUpload from '../uploadButton';
-import axios from 'axios'; 
-import { useLocation } from 'react-router-dom'; 
-import {BasicButtons} from '../button'
-import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button'; // Import Button
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import InputFileUpload from '../uploadButton';
 
 const ImagePreview = ({ image }) => {
   if (!image) return null;
@@ -18,16 +12,6 @@ const ImagePreview = ({ image }) => {
 };
 
 export default function FormUpdate() {
-  const [portfolioCount, setPortfolioCount] = useState(0);
-
-  const [uploadedImage, setUploadedImage] = useState(null);
-  const [skills, setSkills] = useState(''); 
-  const [job, setJob] = useState(''); 
-  const [jobdescription, setJobDescription] = useState(''); 
-  const [bibliography, setBibliography] = useState(''); 
-  const location = useLocation();
-  const { state } = location;
-  const navigate = useNavigate();
   const [data, setData] = useState({
     skills: '',
     job: '',
@@ -35,22 +19,31 @@ export default function FormUpdate() {
     userId: '',
     bibliography: '',
   });
-  const { firstName, lastName, _id } = state || {};
-console.log("id", _id)
-useEffect(() => {
-  const fetchPortfolioCount = async () => {
-    try {
+  const location = useLocation();
+  const { state } = location;
+ // const { firstName, lastName, _id } = state || {};
 
-     const response = await axios.get(`http://localhost:5000/portfolios/portfolios/count/${_id}`);
-     setPortfolioCount(response.data.count);
-    } catch (error) {
-      console.error('Error fetching portfolio count:', error);
+
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [skills, setSkills] = useState('');
+  const [job, setJob] = useState('');
+  const [jobdescription, setJobDescription] = useState('');
+  const [bibliography, setBibliography] = useState('');
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (state) {
+      setSkills(state.skills);
+      setJob(state.job);
+      setJobDescription(state.jobdescription);
+      setBibliography(state.bibliography);
+      // Assuming state.image is a file URL or null
+      setUploadedImage(state.image ? new File([], state.image.name) : null);
     }
-  };
-
-  fetchPortfolioCount();
-}, [_id]);
-
+  }, [state]);
+  const { firstName, lastName, _id } = state || {};
+  console.log("id", _id);
   const handleFileChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setUploadedImage(event.target.files[0]);
@@ -60,52 +53,71 @@ useEffect(() => {
   const handleBibliographyChange = (event) => {
     setBibliography(event.target.value);
   };
-
-
+console.log("Bibliography",bibliography)
   const handleJobChange = (event) => {
     setJob(event.target.value);
   };
-
 
   const handleJobDescriptionChange = (event) => {
     setJobDescription(event.target.value);
   };
 
-
   const handleSkillsChange = (event) => {
-    setSkills(event.target.value); 
+    setSkills(event.target.value);
   };
-  console.log(skills);
   useEffect(() => {
-    console.log('Updated Data:', data);
-  }, [data]); 
+    if (state) {
+      setSkills(state.skills || '');
+      setJob(state.job || '');
+      setJobDescription(state.jobdescription || '');
+      setBibliography(state.bibliography || '');
+      // Assuming state.image is a file URL or null
+     // setUploadedImage(state.image ? new File([], state.image.name) : null);
+      // Make sure to set userId if available in state
+      setData((prevData) => ({ ...prevData, userId: _id || '' }));
+    }
+  }, [state]);
+  //console.log("utilisateur", userId);
   const handleSubmit = async () => {
+    if (!state || !_id) {
+      console.error('Error: userId not available in the state.');
+      return;
+    }
+  
     const formData = new FormData();
     formData.append('bibliography', bibliography);
-    formData.append('image', uploadedImage);
     formData.append('skills', skills);
     formData.append('job', job);
     formData.append('jobdescription', jobdescription);
-    formData.append('userId', _id);
+   // formData.append('userId', .userIstated);
   
-    console.log("ikram", formData);
+    // Check if at least one of the fields has a non-empty value
+    if (!bibliography && !skills && !job && !jobdescription) {
+      console.error('Error: At least one of the fields (bibliography, skills, job, jobdescription) must be non-empty.');
+      return;
+    }
   
-    console.log('_id:', _id);
     try {
-      console.log("test", formData);
-      const response = await axios.post(`http://localhost:5000/portfolios/portfolios`, formData, {
+      console.log('formData', formData);
+      console.log('userID',  _id);
+  
+      const response = await axios.put(`http://localhost:5000/portfolios/portfolios/${ _id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      navigate('/user');
-      console.log('Portfolio created:', response.data);
+  
+      console.log('Response:', response.data);
+     // navigate(`/user?id=${state.userId}`);
+      
+      console.log('Portfolio updated:', response.data);
     } catch (error) {
-      console.error('Error creating portfolio:', error);
+      console.error('Error updating portfolio:', error);
+      console.log('Error response:', error.response.data); // Log the detailed error response
     }
   };
   
-
+  
   return (
     <>
       <Box
@@ -115,8 +127,7 @@ useEffect(() => {
         autoComplete="off"
         style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '5vh', paddingBottom: '15vh', backgroundColor: '#e1e1db' }}
       >
-       <div style={{ display: 'flex', flexDirection: 'column', width: '70%', backgroundColor: 'white', padding: '3vh 6vh', borderRadius: '15px' }}>
-       
+        <div style={{ display: 'flex', flexDirection: 'column', width: '70%', backgroundColor: 'white', padding: '3vh 6vh', borderRadius: '15px' }}>
           <TextField
             label="Professional Summary"
             name="bibliography"
@@ -124,7 +135,7 @@ useEffect(() => {
             variant="standard"
             style={{ width: '100%', marginBottom: '20px' }}
             value={bibliography}
-              onChange={handleBibliographyChange}
+            onChange={handleBibliographyChange}
           />
           <TextField
             label="Skills"
@@ -132,6 +143,7 @@ useEffect(() => {
             type="text"
             variant="standard"
             style={{ width: '100%', marginBottom: '20px' }}
+            value={skills}
             onChange={handleSkillsChange}
           />
           <TextField
@@ -153,24 +165,19 @@ useEffect(() => {
             onChange={handleJobDescriptionChange}
           />
 
-          <div style={{ width: '30%', marginTop: '5vh' }}>
-          
-          </div>
+          <div style={{ width: '30%', marginTop: '5vh' }}></div>
           <div style={{ width: '30%', marginTop: '5vh' }}>
             <InputFileUpload onChange={handleFileChange} />
           </div>
-          <ImagePreview image={uploadedImage} />
-
-          <BasicButtons onClick={handleSubmit} firstName={firstName} lastName={lastName} _id={_id}
-           handleSubmit={handleSubmit} />
-     <Button
-     variant="contained"
-       size="small"
-     style={{ marginLeft: 'auto' }}
-     onClick={() => navigate(`/user?id=${_id}&firstName=${firstName}&lastName=${lastName}&portfolioCount=${portfolioCount}`)}
-     >
-      Pass
-      </Button>
+          {/* <ImagePreview image={uploadedImage} /> */}
+          <Button
+            variant="contained"
+            size="small"
+            style={{ marginLeft: 'auto' }}
+            onClick={handleSubmit}
+          >
+            Update
+          </Button>
         </div>
       </Box>
     </>

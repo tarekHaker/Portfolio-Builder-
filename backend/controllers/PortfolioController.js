@@ -94,32 +94,40 @@ const PortfolioController = {
       res.status(500).send("Error getting portfolio");
     }
   },
-
   updatePortfolio: async (req, res) => {
     try {
-      const portfolioId = req.params.id;
-      const { user, bibliography, skills } = req.body;
+      console.log('Request Body:', req.body);
 
+      const portfolioId = req.params.id;
+      const { userId, bibliography, skills, job, jobdescription } = req.body;
+  
+      if (!userId || (!bibliography && !skills && !job && !jobdescription)) {
+        return res.status(400).json({ error: 'Invalid request body. Please provide userId and at least one field to update (bibliography, skills, job, jobdescription).' });
+      }
+  
       const portfolio = await Portfolio.findByIdAndUpdate(
         portfolioId,
         {
-          user,
-          bibliography,
-          skills,
+          user: userId,
+          ...(bibliography && { bibliography }),
+          ...(skills && { skills }),
+          ...(job && { job }),
+          ...(jobdescription && { jobdescription }),
         },
         { new: true }
       );
-
+  
       if (!portfolio) {
-        return res.status(404).send("Portfolio not found");
+        return res.status(404).json({ error: 'Portfolio not found' });
       }
-
+  
       res.json(portfolio);
     } catch (error) {
       console.error("Error updating portfolio:", error);
-      res.status(500).send("Error updating portfolio");
+      res.status(500).json({ error: 'Internal server error' });
     }
   },
+  
 
   deletePortfolio: async (req, res) => {
     try {

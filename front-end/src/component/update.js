@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 
 import TextField from '@mui/material/TextField';
+import { useHistory } from 'react-router-dom';
 
 import InputFileUpload from '../uploadButton';
 import axios from 'axios'; 
@@ -17,6 +18,7 @@ const ImagePreview = ({ image }) => {
 
 export default function FormUpdate() {
   const [portfolioCount, setPortfolioCount] = useState(0);
+  const history = useHistory();
 
   const [uploadedImage, setUploadedImage] = useState(null);
   const [skills, setSkills] = useState(''); 
@@ -96,13 +98,19 @@ useEffect(() => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      navigate('/user');
+     // navigate(`/user?id=${_id}&firstName=${firstName}&lastName=${lastName}&portfolioCount=${portfolioCount}`);
+     // history.push(`/user?id=${_id}&firstName=${firstName}&lastName=${lastName}&portfolioCount=${portfolioCount}`);
+
       console.log('Portfolio created:', response.data);
     } catch (error) {
       console.error('Error creating portfolio:', error);
     }
   };
-  
+  const handleBasicButtonClick = () => {
+    
+    handleSubmit();
+    navigate(`/user?id=${_id}&firstName=${firstName}&lastName=${lastName}&portfolioCount=${portfolioCount}`);
+  };
 
   return (
     <>
@@ -159,8 +167,8 @@ useEffect(() => {
           </div>
           <ImagePreview image={uploadedImage} />
 
-          <BasicButtons onClick={handleSubmit} firstName={firstName} lastName={lastName} _id={_id}
-           handleSubmit={handleSubmit} />
+          <BasicButtons onClick={handleBasicButtonClick} firstName={firstName} lastName={lastName} _id={_id} handleSubmit={handleSubmit} />
+
      <Button
      variant="contained"
        size="small"
