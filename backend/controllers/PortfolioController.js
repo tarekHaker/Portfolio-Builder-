@@ -1,19 +1,20 @@
 const Portfolio = require("../models/Portfolio");
 
 const PortfolioController = {
-  getPortfolioByUserId: async (req, res) => {
-    try {
-      const userId = req.params.id;
-      console.log(userId);
-      const portfolio = await Portfolio.findOne({ user: userId });
-      console.log(portfolio);
-
-      res.json(portfolio);
-    } catch (error) {
-      console.error("Error getting portfolio:", error);
-      res.status(500).send("Error getting portfolio");
-    }
-  },
+    getPortfolioByUserId: async (req, res) => {
+        try {
+          const userId = req.params.id;
+          console.log(userId);
+          const portfolios = await Portfolio.find({ user: userId });
+          console.log(portfolios);
+      
+          res.json(portfolios);
+        } catch (error) {
+          console.error("Error getting portfolios:", error);
+          res.status(500).send("Error getting portfolios");
+        }
+      },
+      
 
   countPortfoliosByUserId: async (req, res) => {
     try {
@@ -44,12 +45,14 @@ const PortfolioController = {
         descriptioneducation1,
         descriptioneducation2,
       } = req.body;
-      let image = {};
-      if (req.file) {
-        image.data = req.file.buffer;
-        image.contentType = req.file.mimetype;
-      }
-
+  
+      const image = req.file
+        ? {
+            data: req.file.buffer,
+            contentType: req.file.mimetype,
+          }
+        : {};
+  
       const portfolio = new Portfolio({
         user: userId,
         skills,
@@ -66,7 +69,7 @@ const PortfolioController = {
         descriptioneducation2,
         image,
       });
-
+  
       await portfolio.save();
       res.status(201).json(portfolio);
     } catch (error) {
@@ -74,6 +77,7 @@ const PortfolioController = {
       res.status(500).json({ error: "Error creating portfolio" });
     }
   },
+  
 
   getPortfolioById: async (req, res) => {
     try {
