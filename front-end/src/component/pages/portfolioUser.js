@@ -48,7 +48,7 @@ export default function PortfolioUser() {
         <header class="header">
           <div class="nav-section">
             <div class="brand-and-navBtn">
-              <span class="brand-name">USERLAB</span>
+              <span class="brand-name">Portfolio BUILDER</span>
               <span class="navBtn flex">
                 <i class="fas fa-bars"></i>
               </span>
@@ -74,34 +74,29 @@ export default function PortfolioUser() {
           <div class="container about">
             <div class="about-content">
               <div class="about-img flex">
-                <img src={aboutImg} alt="photographer img" />
+                <img src="{image}" alt="photographer img" />
               </div>
-              <h2>{userData.firstName}</h2>
+              <h2>
+                {userData.firstName} {userData.lastName}
+              </h2>
+
               <h3>{portfolioData.job}</h3>
               <blockquote>
-                "Web development is a creative and technical endeavor that
-                involves building and maintaining websites and web applications.
-                It's a blend of art and science where developers craft
-                user-friendly interfaces, ensure responsive designs, and employ
-                programming languages to bring digital experiences to life. ."
+                <h2> Skills </h2>
+                <h3> {portfolioData.skills}</h3>
               </blockquote>
             </div>
 
             <div class="social-icons">
               <ul>
                 <li>
-                  <a href="#">
+                  <a href={userData.facebook}>
                     <i class="fab fa-facebook"></i>
                   </a>
                 </li>
                 <li>
-                  <a href="#">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="fab fa-instagram"></i>
+                  <a href={userData.linkedin}>
+                    <i class="fab fa-linkedin"></i>
                   </a>
                 </li>
               </ul>
@@ -164,7 +159,10 @@ export default function PortfolioUser() {
         <footer class="footer">
           <div class="footer-container container">
             <div>
-              <h2>User</h2>
+              <h2>
+                {userData.firstName} {userData.lastName}
+              </h2>
+
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
                 obcaecati sapiente minima itaque nam modi libero optio vitae
